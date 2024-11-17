@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CreativProp.Views.AboutPage"
+             xmlns:vm="clr-namespace:CreativProp.ViewModels"
+             xmlns:local="clr-namespace:CreativProp.Utilities.Converters"
+             xmlns:wording="clr-namespace:CreativProp.Constants"
+             Title="{x:Static wording:WordingConstants.AboutTitle}"
+             Background="{AppThemeBinding Light=White, Dark=Black}">
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#FFFFFF</Color>
+            <local:BooleanConverter x:Key="booleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+
+        <ActivityIndicator x:Name="defaultActivityIndicator"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="Fill"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}" />
+
+        <Grid IsVisible="{Binding IsBusy, Converter={StaticResource booleanConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions> 
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                    <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
+                        <Image Source="{AppThemeBinding Light=creativ360_logo.png, Dark=creativ360_logo_inverted.png}" VerticalOptions="Center" HeightRequest="64" />
+                    </ContentView>
+                </StackLayout>
+            </StackLayout>
+            <ScrollView Grid.Row="1">
+                <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
+                    <Label Text="{x:Static wording:WordingConstants.AboutCreativ360}" FontSize="16" Padding="0,0,0,0" />
+                    <Label FontSize="16" Padding="0,24,0,0">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="Learn more at "/>
+                                    <Span Text="{x:Static wording:WordingConstants.WebsiteAddress}" FontAttributes="Bold"/>
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Button Margin="0,10,0,0" Text="{x:Static wording:WordingConstants.LearnMoreText}"
+                        Command="{Binding OpenWebCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </Grid>
+
+</ContentPage>
+

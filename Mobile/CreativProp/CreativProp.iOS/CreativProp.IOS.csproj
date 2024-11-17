@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{67D4F875-288F-4681-8C81-AEBB91F3612D}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{89a4fe7c-635d-49c9-8d8c-5cd363c0d68d}</TemplateGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>CreativProp.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>CreativProp.iOS</AssemblyName>
+    <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <ProvisioningType>automatic</ProvisioningType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>x86_64</MtouchArch>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchSdkVersion>16.0</MtouchSdkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <MtouchArch>x86_64</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignKey>Apple Development: Pieter Jordaan (CH68WNG425)</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchLink>None</MtouchLink>
+    <MtouchInterpreter>-all</MtouchInterpreter>
+    <CodesignProvision>Creativ360</CodesignProvision>
+    <MtouchSdkVersion>16.0</MtouchSdkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchLink>SdkOnly</MtouchLink>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <None Include="Entitlements.plist" />
+    <None Include="Info.plist" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controls\CreativEntry.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_about.png" />
+    <BundleResource Include="Resources\icon_about%402x.png" />
+    <BundleResource Include="Resources\icon_about%403x.png" />
+    <BundleResource Include="Resources\icon_feed.png" />
+    <BundleResource Include="Resources\icon_feed%402x.png" />
+    <BundleResource Include="Resources\icon_feed%403x.png" />
+    <BundleResource Include="Resources\xamarin_logo.png" />
+    <BundleResource Include="Resources\xamarin_logo%402x.png" />
+    <BundleResource Include="Resources\xamarin_logo%403x.png" />
+    <BundleResource Include="Resources\creativ360_logo.png" />
+    <BundleResource Include="Resources\creativ360_logo_inverted.png" />
+    <InterfaceDefinition Include="SplashScreen.storyboard" />
+    <BundleResource Include="Resources\LogoSplash.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </BundleResource>
+    <BundleResource Include="Resources\LogoSplashInverted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.8.116</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\CreativProp\CreativProp.csproj">
+      <Project>{3CE69843-07A0-4E64-9C30-82075B9B5DB4}</Project>
+      <Name>CreativProp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Assets.xcassets\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2020x20.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2029x29.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2040x40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2040x40-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2040x40-2.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2058x58.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2058x58-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2060x60.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2076x76.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2080x80.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2080x80-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%2087x87.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%20120x120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%20120x120-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%20152x152.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%20167x167.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%20180x180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Creativ360%20Favicon%20-%201024x1024.png" />
+    <ImageAsset Include="Assets.xcassets\LogoSplash.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\LogoSplash.imageset\CreativProp%20Splash%20-%20TransparentInverted.png" />
+    <ImageAsset Include="Assets.xcassets\LogoSplash.imageset\LogoSplash-Inverted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
+  </ItemGroup>
+</Project>

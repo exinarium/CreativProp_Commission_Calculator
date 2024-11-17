@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CreativProp.Views.HistoryPage"
+             xmlns:vm="clr-namespace:CreativProp.ViewModels"
+             xmlns:local="clr-namespace:CreativProp.Utilities.Converters"             
+             xmlns:localFont="clr-namespace:CreativProp.Fonts"
+             xmlns:wording="clr-namespace:CreativProp.Constants"
+             xmlns:scroll="clr-namespace:Xamarin.Forms.Extended;assembly=Xamarin.Forms.Extended.InfiniteScrolling"
+             Title="{x:Static wording:WordingConstants.HistoryTitle}"
+             Background="{AppThemeBinding Light=White, Dark=Black}">
+    <ContentPage.BindingContext>
+        <vm:HistoryViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#FFFFFF</Color>
+            <local:BooleanConverter x:Key="booleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+
+        <ActivityIndicator x:Name="defaultActivityIndicator"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="Fill"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}" />
+
+        <Grid IsVisible="{Binding IsBusy, Converter={StaticResource booleanConverter}}">
+            <ListView Margin="0,30,0,30" IsVisible="{Binding ShowHasItems, Converter={StaticResource booleanConverter}}" x:Name="HistoryList" SelectionMode="Single" ItemSelected="HistoryList_ItemSelected" ItemsSource="{Binding HistoryList}" HasUnevenRows="True" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <ListView.Behaviors>
+                    <scroll:InfiniteScrollBehavior IsLoadingMore="{Binding IsWorking}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell IsContextActionsLegacyModeEnabled="true">
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="OnDelete"
+                                 CommandParameter="{Binding .}"
+                                 Text="Delete" IsDestructive="True"
+                                 />
+                            </ViewCell.ContextActions>
+                            <StackLayout Padding="15,10,0,10" Orientation="Horizontal" VerticalOptions="Center" >
+                                <Image
+                                    HeightRequest="44"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    WidthRequest="44">
+                                    <Image.Source>
+                                        <FontImageSource FontFamily="Material"
+                                         Color="{x:StaticResource Primary}"
+                                         Glyph="{x:Static localFont:MaterialIcons.History}"
+                                         Size="24" />
+                                    </Image.Source>
+                                </Image>
+                                <Label Text="{Binding CalculationName}" VerticalTextAlignment="Center" />
+                                <Label Text="on" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding CreatedDate, StringFormat='{}{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Grid Padding="6">
+                        <ActivityIndicator x:Name="loadMoreActivityIndicator"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="Fill"
+                               IsRunning="{Binding IsWorking}"
+                               IsVisible="{Binding IsWorking}" />
+                    </Grid>
+                </ListView.Footer>
+            </ListView>
+            <Label Margin="0,30,0,0" HorizontalTextAlignment="Center" IsVisible="{Binding ShowEmpty, Converter={StaticResource booleanConverter}}" Text="{x:Static wording:WordingConstants.EmptyHistory }" />
+        </Grid>
+    </Grid>
+</ContentPage>
+

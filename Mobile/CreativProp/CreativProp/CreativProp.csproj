@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.5" />
+    <PackageReference Include="MAD.XamarinForms.ListView.InfiniteScroll" Version="1.0.1" />
+    <PackageReference Include="Xamarin.Forms.Extended.InfiniteScrolling" Version="1.0.0-preview2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="sqlite-net-pcl" />
+    <None Remove="Constants\" />
+    <None Remove="Utilities\" />
+    <None Remove="Utilities\Filters\" />
+    <None Remove="Utilities\Enums\" />
+    <None Remove="Utilities\Extensions\" />
+    <None Remove="Utilities\CommissionCalculator\" />
+    <None Remove="Utilities\Converters\" />
+    <None Remove="font-awesome" />
+    <None Remove="Fonts\" />
+    <None Remove="Fonts\MaterialIcons-Regular.ttf" />
+    <None Remove="Fonts\Material\" />
+    <None Remove="Fonts\Material\MaterialIcons.ttf" />
+    <None Remove="Fonts\Material\MaterialIcons-Regular.ttf" />
+    <None Remove="Xamarin.CommunityToolkit" />
+    <None Remove="Utilities\Classes\" />
+    <None Remove="MAD.XamarinForms.ListView.InfiniteScroll" />
+    <None Remove="Xamarin.Forms.Extended.InfiniteScrolling" />
+    <None Remove="Controls\" />
+    <None Remove="Utilities\Formatters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Constants\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="Utilities\SQLHelpers\" />
+    <Folder Include="Utilities\Enums\" />
+    <Folder Include="Utilities\Extensions\" />
+    <Folder Include="Utilities\CommissionCalculator\" />
+    <Folder Include="Utilities\Converters\" />
+    <Folder Include="Fonts\" />
+    <Folder Include="Fonts\Material\" />
+    <Folder Include="Utilities\Classes\" />
+    <Folder Include="Controls\" />
+    <Folder Include="Utilities\Formatters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AssemblyInfo.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <EmbeddedResource Include="Fonts\Material\MaterialIcons-Regular.ttf" />
+  </ItemGroup>
+</Project>

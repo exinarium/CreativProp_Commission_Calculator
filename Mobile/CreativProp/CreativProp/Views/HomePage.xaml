@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CreativProp.Views.HomePage"
+             xmlns:vm="clr-namespace:CreativProp.ViewModels"
+             xmlns:local="clr-namespace:CreativProp.Utilities.Converters"
+             xmlns:wording="clr-namespace:CreativProp.Constants"
+             Title="{x:Static wording:WordingConstants.HomeTitle}"
+             Background="{AppThemeBinding Light=White, Dark=Black}">
+    <ContentPage.BindingContext>
+        <vm:HomeViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#FFFFFF</Color>
+            <local:BooleanConverter x:Key="booleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+
+        <ActivityIndicator x:Name="defaultActivityIndicator"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="Fill"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}" />
+
+        <Grid IsVisible="{Binding IsBusy, Converter={StaticResource booleanConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions> 
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                    <ContentView Padding="0,40,0,0" VerticalOptions="FillAndExpand">
+                        <Image Source="{AppThemeBinding Light=LogoSplash.png, Dark=creativ360_logo_inverted.png}" VerticalOptions="Center" HeightRequest="150" />
+                    </ContentView>
+                </StackLayout>
+            </StackLayout>
+            <ScrollView Grid.Row="1">
+                <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
+                    <Label Text="{x:Static wording:WordingConstants.HomeTextTitle}" FontSize="20" Padding="10,10,10,10" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                    <Label Text="{x:Static wording:WordingConstants.HomeText}" FontSize="16" Padding="0,0,0,0" HorizontalTextAlignment="Center" />                    
+                    <Button Margin="0,40,0,0" Text="{x:Static wording:WordingConstants.HomeButtonText}"
+                        Clicked="Button_Clicked"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </Grid>
+
+</ContentPage>
+

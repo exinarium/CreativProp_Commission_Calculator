@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="CreativProp.Views.CommissionCalculatorPage"
+    xmlns:vm="clr-namespace:CreativProp.ViewModels"
+    xmlns:local="clr-namespace:CreativProp.Utilities.Converters"
+    xmlns:wording="clr-namespace:CreativProp.Constants"
+    xmlns:controls="clr-namespace:CreativProp.Controls"
+    Title="{x:Static wording:WordingConstants.CommissionCalculatorTitle}"
+    Background="{AppThemeBinding Light=White, Dark=Black}">
+    <ContentPage.BindingContext>
+        <vm:CommissionCalculatorViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#FFFFFF</Color>
+            <local:BooleanConverter x:Key="booleanConverter" />
+            <local:SellPriceConverter x:Key="sellPriceConverter" />
+            <local:ProceedsConverter x:Key="proceedsConverter" />
+            <local:CommissionAmountConverter x:Key="commissionAmountConverter" />
+            <local:CommissionPlusVatConverter x:Key="commissionAmountPlusVatConverter" />
+            <local:CommissionPercentageConverter x:Key="commissionPercentageConverter" />
+            <local:VatAmountConverter x:Key="vatAmountConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+
+        <ActivityIndicator x:Name="defaultActivityIndicator"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="Fill"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           Color="black" />
+
+        <Grid IsVisible="{Binding IsBusy, Converter={StaticResource booleanConverter}}">
+            <ScrollView Grid.Row="0">
+                <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
+
+                    <Label Text="{x:Static wording:WordingConstants.CalculationName}" FontSize="16" Padding="0,0,0,0" />
+                    <Entry Text="{Binding CalculationName}" />
+
+                    <Label Text="{x:Static wording:WordingConstants.PropertyVATRegistered}" FontSize="16" Padding="0,0,0,0" />
+                    <Picker ItemDisplayBinding="{Binding Key}" ItemsSource="{Binding BooleanPickerList}" SelectedItem="{Binding PropertyVatRegisteredSelected, Mode=TwoWay}" SelectedIndexChanged="PropertyVatRegistered_SelectedIndexChanged" />
+
+                    <Label Text="{x:Static wording:WordingConstants.Calculation}" FontSize="16" Padding="0,0,0,0" />
+                    <Picker ItemDisplayBinding="{Binding Key}" ItemsSource="{Binding CalculatorOptionValues}" SelectedItem="{Binding CalculationOptionSelected, Mode=TwoWay}" SelectedIndexChanged="CalculationOption_SelectedIndexChanged" />
+
+                    <StackLayout IsVisible="{Binding Calculation, Converter={StaticResource sellPriceConverter}}">
+                        <Label Margin="0,20,0,0">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="{x:Static wording:WordingConstants.EnterValueHeader}" FontAttributes="Bold"/>
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Label Text="{x:Static wording:WordingConstants.ProceedsToSeller}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding ProceedsToSeller}" Keyboard="Numeric"/>
+
+                        <Label Text="{x:Static wording:WordingConstants.CommissionPercentage}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding CommissionPercentage}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.CommissionAmount}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding CommissionAmount}" Keyboard="Numeric" />
+
+                        <Button Margin="0,10,0,0" Text="{x:Static wording:WordingConstants.Calculate}"
+                        Clicked="Calculate"
+                        IsEnabled="{Binding IsButtonEnabled, Mode=TwoWay}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                    </StackLayout>
+
+                    <StackLayout IsVisible="{Binding Calculation, Converter={StaticResource proceedsConverter}}">
+                        <Label Margin="0,20,0,0">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="{x:Static wording:WordingConstants.EnterValueHeader}" FontAttributes="Bold"/>
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Label Text="{x:Static wording:WordingConstants.SellPrice}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding SellPrice}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.CommissionPercentage}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding CommissionPercentage}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.CommissionAmount}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding CommissionAmount}" Keyboard="Numeric" />
+
+                        <Button Margin="0,10,0,0" Text="{x:Static wording:WordingConstants.Calculate}"
+                        Clicked="Calculate"
+                        IsEnabled="{Binding IsButtonEnabled, Mode=TwoWay}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                    </StackLayout>
+
+                    <StackLayout IsVisible="{Binding Calculation, Converter={StaticResource commissionPercentageConverter}}">
+                        <Label Margin="0,20,0,0">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="{x:Static wording:WordingConstants.EnterValueHeader}" FontAttributes="Bold"/>
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Label Text="{x:Static wording:WordingConstants.SellPrice}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding SellPrice}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.ProceedsToSeller}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding ProceedsToSeller}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.CommissionAmount}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding CommissionAmount}" Keyboard="Numeric" />
+
+                        <Button Margin="0,10,0,0" Text="{x:Static wording:WordingConstants.Calculate}"
+                        Clicked="Calculate"
+                        IsEnabled="{Binding IsButtonEnabled}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                    </StackLayout>
+
+                    <StackLayout IsVisible="{Binding Calculation, Converter={StaticResource commissionAmountPlusVatConverter}}">
+                        <Label Margin="0,20,0,0">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="{x:Static wording:WordingConstants.EnterValueHeader}" FontAttributes="Bold"/>
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Label Text="{x:Static wording:WordingConstants.SellPrice}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding SellPrice}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.ProceedsToSeller}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding ProceedsToSeller}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.CommissionPercentage}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding CommissionPercentage}" Keyboard="Numeric" />
+
+                        <Button Margin="0,10,0,0" Text="{x:Static wording:WordingConstants.Calculate}"
+                        Clicked="Calculate"
+                        IsEnabled="{Binding IsButtonEnabled, Mode=TwoWay}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                    </StackLayout>
+
+                    <StackLayout IsVisible="{Binding Calculation, Converter={StaticResource commissionAmountConverter}}">
+                        <Label Margin="0,20,0,0">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="{x:Static wording:WordingConstants.EnterValueHeader}" FontAttributes="Bold"/>
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Label Text="{x:Static wording:WordingConstants.SellPrice}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding SellPrice}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.ProceedsToSeller}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding ProceedsToSeller}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.CommissionPercentage}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding CommissionPercentage}" Keyboard="Numeric" />
+
+                        <Button Margin="0,10,0,0" Text="{x:Static wording:WordingConstants.Calculate}"
+                        Clicked="Calculate"
+                        IsEnabled="{Binding IsButtonEnabled, Mode=TwoWay}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                    </StackLayout>
+
+                    <StackLayout IsVisible="{Binding Calculation, Converter={StaticResource vatAmountConverter}}">
+                        <Label Margin="0,20,0,0">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="{x:Static wording:WordingConstants.EnterValueHeader}" FontAttributes="Bold"/>
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Label Text="{x:Static wording:WordingConstants.SellPrice}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding SellPrice}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.ProceedsToSeller}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding ProceedsToSeller}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.CommissionPercentage}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding CommissionPercentage}" Keyboard="Numeric" />
+
+                        <Label Text="{x:Static wording:WordingConstants.CommissionAmount}" FontSize="16" Padding="0,0,0,0" />
+                        <controls:CreativEntry  Text="{Binding CommissionAmount}" Keyboard="Numeric" />
+
+                        <Button Margin="0,10,0,0" Text="{x:Static wording:WordingConstants.Calculate}"
+                        Clicked="Calculate"
+                        IsEnabled="{Binding IsButtonEnabled, Mode=TwoWay}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </Grid>
+</ContentPage>
+
